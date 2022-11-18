@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  transactions-db:
+    image: postgres:13
+    container_name: transactions-db
+    expose:
+      - 5432
+    ports:
+      - 5434:5432
+    environment:
+      POSTGRES_USER: adm
+      POSTGRES_PASSWORD: adm
+      POSTGRES_DB: transactions
+    networks:
+      - transactions
+  api:
+    image: transactions/server
+    build:
+      dockerfile: Dockerfile
+      context: .
+    depends_on:
+      - transactions-db
+    environment:
+      DATABASE_URL: postgresql://adm:adm@transactions-db:5432/transactions?schema=public
+      JWT_SECRET: secret
+    ports:
+      - 8080:5000
+    networks:
+      - transactions
+
+networks:
+  transactions:
