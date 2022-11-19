@@ -2,7 +2,11 @@
 
 ### Requisitos:
 - Docker
+- Nest cli
 
+```
+npm i -g @nestjs/cli
+```
 
 ### Como iniciar o projeto
 ```
